@@ -13,9 +13,7 @@
             --accent: #66b3ff;
             --subway-red: #e74c3c;
             --subway-blue: #3498db;
-            --subway-green: #2ecc71;
             --subway-yellow: #f1c40f;
-            --subway-purple: #9b59b6;
             --text-dark: #003366;
             --text-light: #f0f9ff;
             --card-bg: rgba(255, 255, 255, 0.9);
@@ -235,7 +233,7 @@
         /* 线路信息 */
         .lines-info {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 25px;
             margin-top: 40px;
         }
@@ -285,16 +283,8 @@
             background-color: var(--subway-blue);
         }
         
-        .line-3 .line-badge {
-            background-color: var(--subway-green);
-        }
-        
         .line-4 .line-badge {
             background-color: var(--subway-yellow);
-        }
-        
-        .line-5 .line-badge {
-            background-color: var(--subway-purple);
         }
         
         .line-title {
@@ -317,19 +307,29 @@
         }
         
         .station-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 10px;
         }
         
         .station-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
             background-color: #f0f7ff;
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            text-align: center;
+            border-radius: 8px;
             transition: all 0.2s ease;
             border: 1px solid #d1e8ff;
+            position: relative;
+        }
+        
+        .station-item:before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #bbb;
+            margin-right: 15px;
         }
         
         .station-item:hover {
@@ -338,15 +338,34 @@
             transform: translateY(-3px);
         }
         
-        .major-station {
-            background-color: #e3f2fd;
-            font-weight: bold;
-            border-color: #bbdefb;
+        .transfer-station:before {
+            background: var(--subway-blue);
         }
         
-        .transfer-station {
-            background-color: #fff8e1;
-            border-color: #ffecb3;
+        .transfer-station:after {
+            content: '换乘站';
+            position: absolute;
+            right: 15px;
+            background: #3498db;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .terminal-station:before {
+            background: #e74c3c;
+        }
+        
+        .terminal-station:after {
+            content: '终点站';
+            position: absolute;
+            right: 15px;
+            background: #e74c3c;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
         }
         
         .line-description {
@@ -356,6 +375,22 @@
             color: #555;
             font-size: 0.95rem;
             line-height: 1.6;
+        }
+        
+        .line-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding: 10px 0;
+            border-top: 1px dashed #eee;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .line-info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         /* 使用指南 */
@@ -443,12 +478,6 @@
             }
         }
         
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
         /* 响应式调整 */
         @media (max-width: 768px) {
             .navbar {
@@ -519,108 +548,94 @@
 
         <!-- 地铁线路信息 -->
         <div class="lines-info">
+            <!-- 1号线 -->
             <div class="line-card line-1">
                 <div class="line-header">
                     <div class="line-badge">1</div>
-                    <div class="line-title">红龙线</div>
+                    <div class="line-title">机场专线</div>
                 </div>
                 <div class="line-stations">
-                    <h4><i class="fas fa-train"></i> 主要站点</h4>
+                    <h4><i class="fas fa-train"></i> 站点列表</h4>
                     <div class="station-list">
-                        <div class="station-item major-station">主城中心</div>
-                        <div class="station-item transfer-station">工业枢纽</div>
-                        <div class="station-item">农业区</div>
-                        <div class="station-item">采矿基地</div>
-                        <div class="station-item">玩家社区A</div>
-                        <div class="station-item major-station">末地要塞</div>
+                        <div class="station-item terminal-station">杂鱼园博物馆</div>
+                        <div class="station-item">文化中心</div>
+                        <div class="station-item">玩家社区</div>
+                        <div class="station-item transfer-station">咕咕广场</div>
+                        <div class="station-item">科技园区</div>
+                        <div class="station-item terminal-station">nini咕咕国际机场</div>
                     </div>
                 </div>
                 <div class="line-description">
-                    <p><i class="fas fa-info-circle"></i> 东西向主干线，连接主城和主要资源区，高峰时段每5分钟一班。</p>
+                    <p><i class="fas fa-info-circle"></i> 机场专线连接文化区与交通枢纽，途经咕咕广场换乘中心，平均每8分钟一班。</p>
+                </div>
+                <div class="line-info">
+                    <div class="line-info-item">
+                        <i class="fas fa-clock"></i> 运营时间：6:00 - 24:00
+                    </div>
+                    <div class="line-info-item">
+                        <i class="fas fa-tachometer-alt"></i> 全程时间：15分钟
+                    </div>
                 </div>
             </div>
             
+            <!-- 2号线 -->
             <div class="line-card line-2">
                 <div class="line-header">
                     <div class="line-badge">2</div>
-                    <div class="line-title">蓝海线</div>
+                    <div class="line-title">城市干线</div>
                 </div>
                 <div class="line-stations">
-                    <h4><i class="fas fa-train"></i> 主要站点</h4>
+                    <h4><i class="fas fa-train"></i> 站点列表</h4>
                     <div class="station-list">
-                        <div class="station-item transfer-station">工业枢纽</div>
-                        <div class="station-item">海洋神殿</div>
-                        <div class="station-item major-station">海底基地</div>
-                        <div class="station-item">渔村</div>
-                        <div class="station-item">珊瑚湾</div>
-                        <div class="station-item">玩家社区B</div>
+                        <div class="station-item terminal-station">鞘翅飞行公园</div>
+                        <div class="station-item">冒险者营地</div>
+                        <div class="station-item">nini公会</div>
+                        <div class="station-item transfer-station">咕咕广场</div>
+                        <div class="station-item">商业中心</div>
+                        <div class="station-item terminal-station">啵啵乐</div>
                     </div>
                 </div>
                 <div class="line-description">
-                    <p><i class="fas fa-info-circle"></i> 沿海线路，连接海洋生态区域和工业区，提供快速水下交通服务。</p>
+                    <p><i class="fas fa-info-circle"></i> 贯穿城市东西的主干线，连接娱乐区和商业区，高峰期每5分钟一班。</p>
                 </div>
-            </div>
-            
-            <div class="line-card line-3">
-                <div class="line-header">
-                    <div class="line-badge">3</div>
-                    <div class="line-title">绿野线</div>
-                </div>
-                <div class="line-stations">
-                    <h4><i class="fas fa-train"></i> 主要站点</h4>
-                    <div class="station-list">
-                        <div class="station-item major-station">主城中心</div>
-                        <div class="station-item">丛林遗迹</div>
-                        <div class="station-item">蘑菇岛</div>
-                        <div class="station-item transfer-station">玩家社区C</div>
-                        <div class="station-item">繁花山谷</div>
-                        <div class="station-item major-station">下界入口</div>
+                <div class="line-info">
+                    <div class="line-info-item">
+                        <i class="fas fa-clock"></i> 运营时间：5:30 - 24:30
+                    </div>
+                    <div class="line-info-item">
+                        <i class="fas fa-tachometer-alt"></i> 全程时间：18分钟
                     </div>
                 </div>
-                <div class="line-description">
-                    <p><i class="fas fa-info-circle"></i> 生态旅游专线，贯穿服务器各大自然景观区域，适合观光旅行。</p>
-                </div>
             </div>
             
+            <!-- 4号线 -->
             <div class="line-card line-4">
                 <div class="line-header">
                     <div class="line-badge">4</div>
-                    <div class="line-title">黄沙线</div>
+                    <div class="line-title">洞穴探险线</div>
                 </div>
                 <div class="line-stations">
-                    <h4><i class="fas fa-train"></i> 主要站点</h4>
+                    <h4><i class="fas fa-train"></i> 站点列表</h4>
                     <div class="station-list">
-                        <div class="station-item major-station">下界入口</div>
-                        <div class="station-item">沙漠神殿</div>
-                        <div class="station-item">仙人掌农场</div>
-                        <div class="station-item">金字塔</div>
-                        <div class="station-item transfer-station">玩家社区D</div>
-                        <div class="station-item">黏土山</div>
+                        <div class="station-item terminal-station">nini艺术馆</div>
+                        <div class="station-item">创意工坊</div>
+                        <div class="station-item">前哨站</div>
+                        <div class="station-item">休闲大厅地狱</div>
+                        <div class="station-item transfer-station">啵啵乐</div>
+                        <div class="station-item">地下矿场</div>
+                        <div class="station-item terminal-station">繁茂洞穴</div>
                     </div>
                 </div>
                 <div class="line-description">
-                    <p><i class="fas fa-info-circle"></i> 沙漠探险专线，连接各大沙漠遗迹和资源点，配备空调车厢。</p>
+                    <p><i class="fas fa-info-circle"></i> 连接地表与地下的探险专线，提供便捷的地下交通服务，每10分钟一班。</p>
                 </div>
-            </div>
-            
-            <div class="line-card line-5">
-                <div class="line-header">
-                    <div class="line-badge">5</div>
-                    <div class="line-title">紫晶线</div>
-                </div>
-                <div class="line-stations">
-                    <h4><i class="fas fa-train"></i> 主要站点</h4>
-                    <div class="station-list">
-                        <div class="station-item transfer-station">工业枢纽</div>
-                        <div class="station-item">紫晶洞</div>
-                        <div class="station-item major-station">末地城</div>
-                        <div class="station-item">史莱姆农场</div>
-                        <div class="station-item">玩家社区E</div>
-                        <div class="station-item">洞穴基地</div>
+                <div class="line-info">
+                    <div class="line-info-item">
+                        <i class="fas fa-clock"></i> 运营时间：7:00 - 23:00
                     </div>
-                </div>
-                <div class="line-description">
-                    <p><i class="fas fa-info-circle"></i> 快速特快专线，仅停靠主要站点，连接工业区和末地资源区。</p>
+                    <div class="line-info-item">
+                        <i class="fas fa-tachometer-alt"></i> 全程时间：22分钟
+                    </div>
                 </div>
             </div>
         </div>
@@ -633,7 +648,7 @@
                     <div class="step-number">1</div>
                     <div class="step-content">
                         <h4>找到最近车站</h4>
-                        <p>在主世界各处寻找带有"M"标志的地铁入口，通常位于主要建筑和社区附近。</p>
+                        <p>在服务器各处寻找带有"M"标志的地铁入口，通常位于主要建筑和社区附近。</p>
                     </div>
                 </div>
                 
@@ -657,7 +672,7 @@
                     <div class="step-number">4</div>
                     <div class="step-content">
                         <h4>换乘指南</h4>
-                        <p>在标有"转乘站"的车站下车，按照指示标志前往其他线路的站台继续旅程。</p>
+                        <p>在标有"换乘站"的车站下车，按照指示标志前往其他线路的站台继续旅程。</p>
                     </div>
                 </div>
                 
@@ -724,6 +739,19 @@
             lineCards.forEach((card, index) => {
                 card.style.animation = `slideUp 0.6s ease-out ${index * 0.1}s forwards`;
                 card.style.opacity = '0';
+            });
+            
+            // 为站点添加点击效果
+            const stations = document.querySelectorAll('.station-item');
+            stations.forEach(station => {
+                station.addEventListener('click', function() {
+                    stations.forEach(s => s.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    // 显示站点信息
+                    const stationName = this.textContent;
+                    alert(`您选择了站点：${stationName}\n这是${stationName}站的详细信息...`);
+                });
             });
         });
     </script>
